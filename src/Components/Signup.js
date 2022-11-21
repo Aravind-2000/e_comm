@@ -49,6 +49,7 @@ const Signup = () => {
     setShowPassword(!showPassword);
   };
 
+  //File Converter
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
