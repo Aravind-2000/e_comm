@@ -21,9 +21,6 @@ const Login = () => {
     height: "65vh",
     width: 500,
     margin: "100px auto",
-
-
-    
   };
   const avatarStyle = { backgroundColor: "#1bbd7e" };
   const btnstyle = { margin: "50px 0", marginLeft: "12.5rem" };
