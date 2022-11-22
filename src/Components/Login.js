@@ -14,13 +14,15 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import React, { useState } from "react";
 import ApiURlS from "../Service/ApiURl's";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  let navigate = useNavigate();
   const paperStyle = {
     padding: 50,
     height: "65vh",
     width: 500,
-    margin: "100px auto",
+    margin: "20px auto",
   };
   const avatarStyle = { backgroundColor: "#1bbd7e" };
   const btnstyle = { margin: "50px 0", marginLeft: "12.5rem" };
@@ -48,7 +50,9 @@ const Login = () => {
         sessionStorage.setItem("username", res.data.userName);
         sessionStorage.setItem("email", res.data.userEmail);
         sessionStorage.setItem("dp", res.data.profilePicture);
-        console.log(res.data);
+        sessionStorage.setItem("role", res.data.roleFlag);
+        sessionStorage.setItem("condition", true);
+        navigate("/");
         setError(false);
       })
       .catch((err) => {

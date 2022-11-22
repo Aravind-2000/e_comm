@@ -28,7 +28,7 @@ const Signup = () => {
     padding: 50,
     height: "70vh",
     width: 500,
-    margin: "90px auto",
+    margin: "10px auto",
   };
   const avatarStyle = { backgroundColor: "#1bbd7e" };
   const btnstyle = { margin: "8px 0" };
