@@ -100,13 +100,13 @@ const LoginDetails = () => {
                   Add Category
                 </Button>
                 <br />
-                <Button
+                {/* <Button
                   style={{ marginTop: 20 }}
                   variant="contained"
                   color="primary"
                 >
                   Category List
-                </Button>
+                </Button> */}
               </Paper>
             </Grid>
             <Grid item xs={6}>
@@ -120,13 +120,13 @@ const LoginDetails = () => {
                   Add Coupon
                 </Button>
                 <br />
-                <Button
+                {/* <Button
                   style={{ marginTop: 20 }}
                   variant="contained"
                   color="primary"
                 >
                   Coupon List
-                </Button>
+                </Button> */}
               </Paper>
             </Grid>
 
@@ -141,13 +141,13 @@ const LoginDetails = () => {
                   Add Event
                 </Button>
                 <br />
-                <Button
+                {/* <Button
                   style={{ marginTop: 20 }}
                   variant="contained"
                   color="primary"
                 >
                   Event List
-                </Button>
+                </Button> */}
               </Paper>
             </Grid>
           </Grid>
