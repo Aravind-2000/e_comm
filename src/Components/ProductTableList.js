@@ -13,10 +13,12 @@ import {
 } from "@mui/material";
 import ApiURlS from "../Service/ApiURl's";
 import "../Css/Content.css";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const ProductTableList = () => {
   const [products, setproducts] = useState([]);
-  useEffect(() => {
+
+  function getProducts() {
     ApiURlS.getAllProducts()
       .then((res) => {
         setproducts(res.data);
@@ -25,6 +27,9 @@ const ProductTableList = () => {
       .catch((err) => {
         console.log(err);
       });
+  }
+  useEffect(() => {
+    getProducts();
   }, []);
 
   const [page, setPage] = React.useState(0);
@@ -36,6 +41,15 @@ const ProductTableList = () => {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  };
+
+  const deleteProduct = (id) => {
+    ApiURlS.deleteProduct(id)
+      .then((res) => {
+        console.log(res.data);
+        getProducts();
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -57,6 +71,9 @@ const ProductTableList = () => {
                 {/* <TableCell className="tblhd" align="left">
                   Product Image
                 </TableCell> */}
+                <TableCell className="tblhd" align="left">
+                  Actions
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -71,6 +88,12 @@ const ProductTableList = () => {
                     <TableCell align="left">{value.productName}</TableCell>
                     <TableCell align="left">
                       {value.productCategory?.categoryName}
+                    </TableCell>
+                    <TableCell align="left">
+                      <DeleteIcon
+                        style={{ color: "red", cursor: "pointer" }}
+                        onClick={() => deleteProduct(value.productId)}
+                      />
                     </TableCell>
                     {/* <TableCell align="left">
                       <Stack direction="row" spacing={2}>
