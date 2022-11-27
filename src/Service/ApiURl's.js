@@ -5,6 +5,7 @@ const signupcustomer = "http://localhost:8080/user/signup";
 const signupadmin = "http://localhost:8080/user/adminsignup";
 const getAllProductsUrl = "http://localhost:8080/product/getall";
 const addProductsUrl = "http://localhost:8080/product/add";
+const deleteProductsUrl = "http://localhost:8080/product/delete/";
 const getAllProdCategoryUrl = "http://localhost:8080/category/getall";
 const addProdCategoryUrl = "http://localhost:8080/category/add";
 const getAddByUserUrl = "http://localhost:8080/address/getbyuser/";
@@ -74,6 +75,10 @@ class EcommApi {
 
   removeProductFromCart(pid, cid) {
     return axios.delete(removeProdFromCartUrl + pid + "/" + cid);
+  }
+
+  deleteProduct(id) {
+    return axios.delete(deleteProductsUrl + id);
   }
 }
 
