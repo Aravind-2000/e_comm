@@ -10,12 +10,14 @@ import {
   Box,
   IconButton,
   InputAdornment,
+  FormHelperText,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { FileUploader } from "react-drag-drop-files";
 import ApiURlS from "../Service/ApiURl's";
+import "../Css/Content.css";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -23,10 +25,13 @@ const Signup = () => {
   const [username, setusername] = useState("");
   const [phoneNumber, setphoneNumber] = useState("");
   const [password, setpassword] = useState("");
+  const [repassword, setrepassword] = useState("");
 
   const paperStyle = {
+    // backgroundColor: "black",
+    // color: "orange",
     padding: 50,
-    height: "70vh",
+    height: "75vh",
     width: 500,
     margin: "10px auto",
   };
@@ -49,6 +54,14 @@ const Signup = () => {
     setShowPassword(!showPassword);
   };
 
+  const [showPassword1, setShowPassword1] = useState(false);
+  const handleMouseDownPassword1 = (event) => {
+    event.preventDefault();
+  };
+  const handleClickShowPassword1 = () => {
+    setShowPassword1(!showPassword1);
+  };
+
   //File Converter
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -65,40 +78,54 @@ const Signup = () => {
     });
   };
 
+  const [error, seterror] = useState("");
+
+  const checkingPasswords = (pass1, pass2) => {
+    if (pass1.trim() === pass2.trim()) {
+      setpassword(pass1);
+      return true;
+    } else {
+      seterror("Both passwords doesn't match");
+      return false;
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (file) {
-      const base64 = await convertBase64(file);
-      const signupdetails = {
-        email,
-        password,
-        username,
-        phoneNumber,
-        profilePicture: base64,
-      };
-      ApiURlS.doSignupAsCustomer(signupdetails)
-        .then((res) => {
-          console.log(res.data);
-          navigate("/login");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      const signupdetails_1 = {
-        email,
-        password,
-        username,
-        phoneNumber,
-      };
-      ApiURlS.doSignupAsCustomer(signupdetails_1)
-        .then((res) => {
-          console.log(res.data);
-          navigate("/login");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    if (checkingPasswords(password, repassword)) {
+      if (file) {
+        const base64 = await convertBase64(file);
+        const signupdetails = {
+          email,
+          password,
+          username,
+          phoneNumber,
+          profilePicture: base64,
+        };
+        ApiURlS.doSignupAsCustomer(signupdetails)
+          .then((res) => {
+            console.log(res.data);
+            navigate("/login");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        const signupdetails_1 = {
+          email,
+          password,
+          username,
+          phoneNumber,
+        };
+        ApiURlS.doSignupAsCustomer(signupdetails_1)
+          .then((res) => {
+            console.log(res.data);
+            navigate("/login");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     }
   };
 
@@ -150,6 +177,34 @@ const Signup = () => {
                   ),
                 }}
               />
+              <br />
+              <TextField
+                type={showPassword1 ? "text" : "password"}
+                className="formtext"
+                style={{ marginTop: 20 }}
+                label="Re-Enter Password"
+                value={repassword}
+                placeholder="Re-Enter Password"
+                onChange={(e) => setrepassword(e.target.value)}
+                fullWidth
+                variant="outlined"
+                required
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={handleClickShowPassword1}
+                        onMouseDown={handleMouseDownPassword1}
+                      >
+                        {showPassword1 ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <FormHelperText error>
+                {error === null ? null : error}{" "}
+              </FormHelperText>
               <br />
               <TextField
                 className="formtext"
