@@ -15,6 +15,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import React, { useState } from "react";
 import ApiURlS from "../Service/ApiURl's";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
   let navigate = useNavigate();
@@ -46,19 +47,29 @@ const Login = () => {
     const logindetails = { email, password };
     ApiURlS.getLoginDetails(logindetails)
       .then((res) => {
-        sessionStorage.setItem("userid", res.data.userId);
-        sessionStorage.setItem("username", res.data.userName);
-        sessionStorage.setItem("email", res.data.userEmail);
-        sessionStorage.setItem("dp", res.data.profilePicture);
-        sessionStorage.setItem("role", res.data.roleFlag);
-        sessionStorage.setItem("condition", true);
-        navigate("/");
+        getCartId(res.data.userId);
+        localStorage.setItem("userid", res.data.userId);
+        localStorage.setItem("username", res.data.userName);
+        localStorage.setItem("email", res.data.userEmail);
+        localStorage.setItem("dp", res.data.profilePicture);
+        localStorage.setItem("role", res.data.roleFlag);
+        localStorage.setItem("condition", true);
+        navigate("/products");
         setError(false);
       })
       .catch((err) => {
         console.log(err);
         setError(true);
       });
+  };
+
+  const getCartId = (id) => {
+    axios
+      .get(`http://localhost:8080/cart/getcartid/` + id)
+      .then((res) => {
+        localStorage.setItem("cartid", res.data);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
