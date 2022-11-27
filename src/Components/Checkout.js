@@ -40,7 +40,6 @@ const Checkout = ({ product }) => {
         <br />
         <hr />
         <br />
-
         <Grid container spacing={2}>
           <Grid item>
             <ButtonBase>
@@ -65,7 +64,48 @@ const Checkout = ({ product }) => {
             </Typography>
           </Grid>
         </Grid>
+        <hr />
       </Paper>
+      <Typography variant="h4" sx={{ color: "orange", marginLeft: 8 }}>
+        Available Coupons
+      </Typography>
+
+      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
+        {coupons.map((coupon) => {
+          return (
+            <Grid item xs={6} sm={4} md={4}>
+              <ButtonBase sx={{ borderColor: "orange" }}>
+                <Paper
+                  elevation={3}
+                  sx={{
+                    p: 1,
+                    marginLeft: 10,
+                    marginTop: 3,
+                    width: "auto",
+                    backgroundColor: "orange",
+                  }}
+                >
+                  <Typography
+                    variant="h6"
+                    sx={{ color: "black", marginLeft: 1 }}
+                    component="div"
+                  >
+                    With a flat discount {coupon.couponDiscount}% for all
+                    mobiles
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                    sx={{ color: "black" }}
+                    component="div"
+                  >
+                    Use code "{coupon.couponCode}"
+                  </Typography>
+                </Paper>
+              </ButtonBase>
+            </Grid>
+          );
+        })}
+      </Grid>
     </div>
   );
 };
