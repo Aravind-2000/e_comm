@@ -8,6 +8,7 @@ import ResponsiveAppBar from "./Components/AppBar";
 import MyCart from "./Components/MyCart";
 import AdminSignup from "./Components/Admin/AdminSignup";
 import Checkout from "./Components/Checkout";
+import MyOrders from "./Components/MyOrders";
 
 function App() {
   return (
@@ -22,7 +23,8 @@ function App() {
           <Route exact path={"/adminsignup"} element={<AdminSignup />} />
           <Route exact path={"logindetails"} element={<LoginDetails />} />
           <Route exact path={"/mycart"} element={<MyCart />} />
-          <Route exact path={"/checkout"} element={<Checkout />} />
+          <Route exact path={"/myorders"} element={<MyOrders />} />
+          <Route exact path={"/checkout/:productid"} element={<Checkout />} />
         </Routes>
       </div>
     </div>
