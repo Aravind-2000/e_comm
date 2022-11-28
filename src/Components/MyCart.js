@@ -57,7 +57,7 @@ const MyCart = () => {
   const [tocheckout, settocheckout] = useState("");
   function checkout(item) {
     settocheckout(item);
-    Navigate("/checkout");
+    Navigate(`/checkout/${item}`);
   }
 
   return (
@@ -111,7 +111,7 @@ const MyCart = () => {
                             <Typography
                               component="Button"
                               variant="h6"
-                              onClick={() => checkout(items)}
+                              onClick={() => checkout(items.productId)}
                               sx={{
                                 color: "black",
                                 backgroundColor: "yellow",

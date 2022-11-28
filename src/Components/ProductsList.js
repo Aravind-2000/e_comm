@@ -57,6 +57,14 @@ const ProductsList = () => {
     }
   };
 
+  const buyNow = (pid) => {
+    if (condition === null) {
+      navigate("/login");
+    } else {
+      navigate(`/checkout/${pid}`);
+    }
+  };
+
   return (
     <div>
       <Grid container spacing={2}>
@@ -129,6 +137,7 @@ const ProductsList = () => {
                                 }}
                                 color="black"
                                 variant="h6"
+                                onClick={() => buyNow(product.productId)}
                               >
                                 Buy Now
                               </Typography>
