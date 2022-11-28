@@ -4,6 +4,7 @@ const loginurl = "http://localhost:8080/user/logindetails";
 const signupcustomer = "http://localhost:8080/user/signup";
 const signupadmin = "http://localhost:8080/user/adminsignup";
 const getAllProductsUrl = "http://localhost:8080/product/getall";
+const getProductUrl = "http://localhost:8080/product/get/";
 const addProductsUrl = "http://localhost:8080/product/add";
 const deleteProductsUrl = "http://localhost:8080/product/delete/";
 const getAllProdCategoryUrl = "http://localhost:8080/category/getall";
@@ -16,8 +17,22 @@ const getAllCouponUrl = "http://localhost:8080/coupon/getall";
 const getMyCartUrl = "http://localhost:8080/cart/getbyuser/";
 const addProdToCartUrl = "http://localhost:8080/product/addtocart/";
 const removeProdFromCartUrl = "http://localhost:8080/product/removefromcart/";
+const getMyOrdersUrl = "http://localhost:8080/orders/getorderbyuser/";
+const placeOrderUrl = "http://localhost:8080/orders/placeorder";
 
 class EcommApi {
+  getProduct(id) {
+    return axios.get(getProductUrl + id);
+  }
+
+  placeOrder(order) {
+    return axios.post(placeOrderUrl, order);
+  }
+
+  getUsersOrders(userid) {
+    return axios.get(getMyOrdersUrl + userid);
+  }
+
   getLoginDetails(logindetails) {
     return axios.post(loginurl, logindetails);
   }
