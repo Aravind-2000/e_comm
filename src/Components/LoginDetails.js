@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Paper, Button, Box, Grid } from "@mui/material";
+import { Paper, Button, Box, Grid, Typography } from "@mui/material";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import Dialog from "@mui/material/Dialog";
@@ -70,7 +70,7 @@ const LoginDetails = () => {
           <Grid container spacing={10} columns={{ xs: 10, sm: 24, md: 26 }}>
             <Grid item xs={6}>
               <Paper elevation={4} style={paperStyle1}>
-                <h2> Products </h2>
+                <h2 variant="h2"> Products </h2>
                 <Button
                   variant="contained"
                   onClick={openAddProduct}
