@@ -140,7 +140,7 @@ function ResponsiveAppBar() {
                     variant="h6"
                     noWrap
                     component="a"
-                    href="/orders"
+                    href="/myorders"
                     sx={{ textDecoration: "none", color: "black" }}
                   >
                     My Orders
