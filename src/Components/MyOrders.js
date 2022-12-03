@@ -96,7 +96,7 @@ const MyOrders = () => {
                       </Grid>
                       <Grid item>
                         <Typography variant="h6" component="div">
-                          ₹ {items.totalAmount}
+                          ₹ {parseFloat(items.totalAmount).toFixed(2)}
                         </Typography>
                       </Grid>
                     </Grid>
