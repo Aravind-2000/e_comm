@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ApiURlS from "../Service/ApiURl's";
-import { styled, Grid, Paper, Typography, ButtonBase } from "@mui/material";
+import { styled, Grid, Paper, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const MyOrders = () => {
@@ -17,7 +17,6 @@ const MyOrders = () => {
     ApiURlS.getUsersOrders(userid)
       .then((res) => {
         setmyOrders(res.data);
-        console.log(res.data);
       })
       .catch((err) => console.log(err));
   };
