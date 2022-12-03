@@ -10,7 +10,6 @@ import {
   TextField,
 } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
@@ -21,7 +20,7 @@ const Checkout = () => {
   const [coupons, setcoupons] = useState([]);
 
   const [product, setproduct] = useState("");
-  const [finalPrice, setfinalPrice] = useState("");
+  let [finalPrice, setfinalPrice] = useState("");
 
   const [enteredCoupon, setenteredCoupon] = useState("");
 
@@ -37,7 +36,7 @@ const Checkout = () => {
         setfinalPrice(res.data.productPrice);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [productid]);
 
   const Img = styled("img")({
     margin: "auto",
@@ -48,7 +47,9 @@ const Checkout = () => {
 
   const [clickedDiscount, setclickedDiscount] = useState("");
   const applyCoupon = () => {
-    setfinalPrice(finalPrice - product.productPrice * (clickedDiscount / 100));
+    finalPrice = product?.productPrice * count;
+    const temp = finalPrice - finalPrice * (clickedDiscount / 100);
+    setfinalPrice(temp);
   };
 
   function decCount() {
@@ -56,6 +57,8 @@ const Checkout = () => {
       setcount(1);
     } else {
       setcount(count - 1);
+      console.log(count);
+      setfinalPrice(product.productPrice * (count - 1));
     }
   }
 
@@ -86,7 +89,7 @@ const Checkout = () => {
           p: 1,
           my: 2,
           marginLeft: 9,
-          width: 1670,
+          width: "fit-content",
           backgroundColor: (theme) =>
             theme.palette.mode === "dark" ? "#1A2027" : "#fff",
         }}
@@ -128,7 +131,6 @@ const Checkout = () => {
                   variant="outlined"
                   onClick={() => {
                     setcount(count + 1);
-                    console.log(count);
                     setfinalPrice(product.productPrice * (count + 1));
                   }}
                 >
@@ -139,13 +141,12 @@ const Checkout = () => {
           </Grid>
           <Grid item lg={2}>
             <Typography variant="h6" component="div">
-              ₹ {finalPrice}
+              ₹ {parseFloat(finalPrice).toFixed(2)}
             </Typography>
           </Grid>
         </Grid>
 
         <Grid container spacing={30}>
-          <Grid item></Grid>
           <Grid item></Grid>
           <Grid item></Grid>
           <Grid item>
@@ -161,14 +162,13 @@ const Checkout = () => {
             />
             <Button onClick={() => applyCoupon()}>APPLY</Button>
           </Grid>
-          <Grid item>
+          <Grid item sx={{ marginRight: 6 }}>
             <Button
               onClick={(e) => placeOrder(e)}
               variant="contained"
               color="success"
             >
-              {" "}
-              Place Order{" "}
+              Place Order
             </Button>
           </Grid>
         </Grid>
@@ -184,6 +184,7 @@ const Checkout = () => {
           return (
             <Grid item xs={6} sm={4} md={4}>
               <ButtonBase
+                id="couponBase"
                 sx={{ borderColor: "orange" }}
                 onClick={() => {
                   setenteredCoupon(coupon.couponCode);
