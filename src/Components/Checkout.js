@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -61,6 +62,15 @@ const Checkout = () => {
       setfinalPrice(product.productPrice * (count - 1));
     }
   }
+
+  const getCouponDiscount = (code) => {
+    axios
+      .get(`http://localhost:8080/coupon/getcoupondiscount/${code}`)
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => console.log(err));
+  };
 
   const placeOrder = (e) => {
     e.preventDefault();
@@ -158,7 +168,9 @@ const Checkout = () => {
               placeholder="Enter Coupon Code "
               value={enteredCoupon}
               label="Coupon Code"
+              disabled
               onChange={(e) => setenteredCoupon(e.target.value)}
+              onTouchCancel={(e) => getCouponDiscount(e.target.value)}
             />
             <Button onClick={() => applyCoupon()}>APPLY</Button>
           </Grid>
