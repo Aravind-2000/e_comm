@@ -135,28 +135,32 @@ function ResponsiveAppBar() {
                     My Cart
                   </Typography>
                 </MenuItem>
-                <MenuItem>
-                  <Typography
-                    variant="h6"
-                    noWrap
-                    component="a"
-                    href="/myorders"
-                    sx={{ textDecoration: "none", color: "black" }}
-                  >
-                    My Orders
-                  </Typography>
-                </MenuItem>
-                <MenuItem>
-                  <Typography
-                    variant="h6"
-                    noWrap
-                    component="div"
-                    onClick={logout}
-                    sx={{ textDecoration: "none", color: "black" }}
-                  >
-                    Logout
-                  </Typography>
-                </MenuItem>
+                {role !== 1 ? (
+                  <>
+                    <MenuItem>
+                      <Typography
+                        variant="h6"
+                        noWrap
+                        component="a"
+                        href="/myorders"
+                        sx={{ textDecoration: "none", color: "black" }}
+                      >
+                        My Orders
+                      </Typography>
+                    </MenuItem>
+                    <MenuItem>
+                      <Typography
+                        variant="h6"
+                        noWrap
+                        component="div"
+                        onClick={logout}
+                        sx={{ textDecoration: "none", color: "black" }}
+                      >
+                        Logout
+                      </Typography>
+                    </MenuItem>
+                  </>
+                ) : null}
               </Menu>
             </div>
           )}

@@ -65,6 +65,8 @@ const ProductsList = () => {
     }
   };
 
+  const role = localStorage.getItem("role");
+
   return (
     <div>
       <Grid container spacing={2}>
@@ -109,40 +111,42 @@ const ProductsList = () => {
                             </Typography>
                           </Grid>
                           <br />
-                          <Grid container spacing={2}>
-                            <Grid item>
-                              <Typography
-                                component="Button"
-                                sx={{
-                                  cursor: "pointer",
-                                  paddingRight: 2,
-                                  borderRadius: "20px",
-                                  backgroundColor: "lightgoldenrodyellow",
-                                }}
-                                color="black"
-                                variant="h6"
-                                onClick={() => AddToCart(product.productId)}
-                              >
-                                Add to Cart
-                              </Typography>
+                          {role !== "1" ? (
+                            <Grid container spacing={2}>
+                              <Grid item>
+                                <Typography
+                                  component="Button"
+                                  sx={{
+                                    cursor: "pointer",
+                                    paddingRight: 2,
+                                    borderRadius: "20px",
+                                    backgroundColor: "lightgoldenrodyellow",
+                                  }}
+                                  color="black"
+                                  variant="h6"
+                                  onClick={() => AddToCart(product.productId)}
+                                >
+                                  Add to Cart
+                                </Typography>
+                              </Grid>
+                              <Grid item>
+                                <Typography
+                                  component="Button"
+                                  sx={{
+                                    cursor: "pointer",
+                                    paddingRight: 5,
+                                    borderRadius: "20px",
+                                    backgroundColor: "orange",
+                                  }}
+                                  color="black"
+                                  variant="h6"
+                                  onClick={() => buyNow(product.productId)}
+                                >
+                                  Buy Now
+                                </Typography>
+                              </Grid>
                             </Grid>
-                            <Grid item>
-                              <Typography
-                                component="Button"
-                                sx={{
-                                  cursor: "pointer",
-                                  paddingRight: 5,
-                                  borderRadius: "20px",
-                                  backgroundColor: "orange",
-                                }}
-                                color="black"
-                                variant="h6"
-                                onClick={() => buyNow(product.productId)}
-                              >
-                                Buy Now
-                              </Typography>
-                            </Grid>
-                          </Grid>
+                          ) : null}
                         </Grid>
                       </Grid>
                     </Grid>
