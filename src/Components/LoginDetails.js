@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Paper, Button, Box, Grid, Typography } from "@mui/material";
+import { Paper, Button, Box, Grid } from "@mui/material";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import Dialog from "@mui/material/Dialog";
@@ -10,6 +10,9 @@ import AddCategory from "./AddCategory";
 import AddEvent from "./AddEvent";
 import AddCoupon from "./AddCoupon";
 import ProductTableList from "./ProductTableList";
+import CategoryTableList from "./CategoryTableList";
+import CouponTableList from "./CouponTableList";
+import EventTableList from "./EventTableList";
 
 const LoginDetails = () => {
   const role = localStorage.getItem("role");
@@ -63,6 +66,30 @@ const LoginDetails = () => {
     setproductlist(false);
   };
 
+  const [categoryList, setcategoryList] = useState(false);
+  const openCategoryList = () => {
+    setcategoryList(true);
+  };
+  const closeCategoryList = () => {
+    setcategoryList(false);
+  };
+
+  const [couponList, setcouponList] = useState(false);
+  const openCouponList = () => {
+    setcouponList(true);
+  };
+  const closeCouponList = () => {
+    setcouponList(false);
+  };
+
+  const [eventList, seteventList] = useState(false);
+  const openEventList = () => {
+    seteventList(true);
+  };
+  const closeEventList = () => {
+    seteventList(false);
+  };
+
   return (
     <div>
       {role === "1" ? (
@@ -100,13 +127,14 @@ const LoginDetails = () => {
                   Add Category
                 </Button>
                 <br />
-                {/* <Button
+                <Button
                   style={{ marginTop: 20 }}
                   variant="contained"
                   color="primary"
+                  onClick={() => openCategoryList()}
                 >
                   Category List
-                </Button> */}
+                </Button>
               </Paper>
             </Grid>
             <Grid item xs={6}>
@@ -120,13 +148,14 @@ const LoginDetails = () => {
                   Add Coupon
                 </Button>
                 <br />
-                {/* <Button
+                <Button
                   style={{ marginTop: 20 }}
                   variant="contained"
                   color="primary"
+                  onClick={() => openCouponList()}
                 >
                   Coupon List
-                </Button> */}
+                </Button>
               </Paper>
             </Grid>
 
@@ -141,13 +170,14 @@ const LoginDetails = () => {
                   Add Event
                 </Button>
                 <br />
-                {/* <Button
+                <Button
                   style={{ marginTop: 20 }}
                   variant="contained"
                   color="primary"
+                  onClick={() => openEventList()}
                 >
                   Event List
-                </Button> */}
+                </Button>
               </Paper>
             </Grid>
           </Grid>
@@ -290,6 +320,87 @@ const LoginDetails = () => {
         </DialogTitle>
         <DialogContent>
           <ProductTableList />
+        </DialogContent>
+      </Dialog>
+
+      {/* Category List */}
+      <Dialog
+        open={categoryList}
+        fullWidth="true"
+        maxWidth="lg"
+        onClose={closeCategoryList}
+        size="lg"
+      >
+        <DialogTitle>
+          <h2> Product Categories </h2>
+          <IconButton
+            onClick={closeCategoryList}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <CategoryTableList />
+        </DialogContent>
+      </Dialog>
+
+      {/* Coupon List */}
+      <Dialog
+        open={couponList}
+        fullWidth="true"
+        maxWidth="lg"
+        onClose={closeCouponList}
+        size="lg"
+      >
+        <DialogTitle>
+          <h2> Coupons </h2>
+          <IconButton
+            onClick={closeCouponList}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <CouponTableList />
+        </DialogContent>
+      </Dialog>
+
+      {/* Event List */}
+      <Dialog
+        open={eventList}
+        fullWidth="true"
+        maxWidth="lg"
+        onClose={closeEventList}
+        size="lg"
+      >
+        <DialogTitle>
+          <h2> Events </h2>
+          <IconButton
+            onClick={closeEventList}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <EventTableList />
         </DialogContent>
       </Dialog>
     </div>
