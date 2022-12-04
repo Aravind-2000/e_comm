@@ -135,7 +135,7 @@ function ResponsiveAppBar() {
                     My Cart
                   </Typography>
                 </MenuItem>
-                {role !== 1 ? (
+                {role !== "1" ? (
                   <>
                     <MenuItem>
                       <Typography
