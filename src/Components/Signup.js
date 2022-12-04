@@ -31,7 +31,7 @@ const Signup = () => {
     // backgroundColor: "black",
     // color: "orange",
     padding: 50,
-    height: "75vh",
+    height: "78vh",
     width: 500,
     margin: "10px auto",
   };
@@ -253,7 +253,9 @@ const Signup = () => {
             </Grid>
             <br />
             <Grid container spacing={2}>
-              <Typography style={{ marginLeft: 100, marginTop: 20 }}>
+              <Typography
+                style={{ marginLeft: 100, marginTop: 20, color: "blue" }}
+              >
                 <span>
                   <b> Already have an Account ? </b>
                 </span>
