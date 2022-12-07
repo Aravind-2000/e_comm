@@ -97,27 +97,6 @@ const LoginDetails = () => {
           <Grid container spacing={10} columns={{ xs: 10, sm: 24, md: 26 }}>
             <Grid item xs={6}>
               <Paper elevation={4} style={paperStyle1}>
-                <h2 variant="h2"> Products </h2>
-                <Button
-                  variant="contained"
-                  onClick={openAddProduct}
-                  color="success"
-                >
-                  Add Product
-                </Button>
-                <br />
-                <Button
-                  style={{ marginTop: 20 }}
-                  variant="contained"
-                  color="primary"
-                  onClick={() => openProductList()}
-                >
-                  Product List
-                </Button>
-              </Paper>
-            </Grid>
-            <Grid item xs={6}>
-              <Paper elevation={4} style={paperStyle1}>
                 <h2> Product Categories </h2>
                 <Button
                   variant="contained"
@@ -134,6 +113,27 @@ const LoginDetails = () => {
                   onClick={() => openCategoryList()}
                 >
                   Category List
+                </Button>
+              </Paper>
+            </Grid>
+            <Grid item xs={6}>
+              <Paper elevation={4} style={paperStyle1}>
+                <h2 variant="h2"> Products </h2>
+                <Button
+                  variant="contained"
+                  onClick={openAddProduct}
+                  color="success"
+                >
+                  Add Product
+                </Button>
+                <br />
+                <Button
+                  style={{ marginTop: 20 }}
+                  variant="contained"
+                  color="primary"
+                  onClick={() => openProductList()}
+                >
+                  Product List
                 </Button>
               </Paper>
             </Grid>
