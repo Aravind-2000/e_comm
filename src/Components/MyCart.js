@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import ApiURlS from "../Service/ApiURl's";
-import { styled, Grid, Paper, Typography, ButtonBase } from "@mui/material";
+import {
+  styled,
+  Grid,
+  Paper,
+  Typography,
+  ButtonBase,
+  Snackbar,
+} from "@mui/material";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import Dialog from "@mui/material/Dialog";
@@ -45,13 +52,21 @@ const MyCart = () => {
     setproductDetailsDialog(false);
   };
 
+  const [snack, setsnack] = useState(false);
+  const [snackMsg, setsnackMsg] = useState("");
   function removeFromCart(pid) {
     ApiURlS.removeProductFromCart(pid, localStorage.getItem("cartid"))
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         getCart();
+        setsnack(true);
+        setsnackMsg(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setsnack(true);
+        setsnackMsg(err.response.data);
+        // console.log(err);
+      });
   }
 
   const [tocheckout, settocheckout] = useState("");
@@ -59,6 +74,14 @@ const MyCart = () => {
     settocheckout(item);
     Navigate(`/checkout/${item}`);
   }
+
+  const action = (
+    <React.Fragment>
+      <IconButton size="small" color="inherit" onClick={() => setsnack(false)}>
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
 
   return (
     <div>
@@ -156,6 +179,15 @@ const MyCart = () => {
           </Typography>
         )}
       </Paper>
+
+      <Snackbar
+        anchorOrigin={{ horizontal: "center", vertical: "top" }}
+        open={snack}
+        autoHideDuration={2000}
+        message={snackMsg}
+        onClose={() => setsnack(false)}
+        action={action}
+      />
 
       <Dialog
         open={productDetailsDialog}

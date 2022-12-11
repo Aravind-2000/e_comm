@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import ApiURlS from "../Service/ApiURl's";
-import { Grid, styled, Typography, Paper, ButtonBase } from "@mui/material";
+import {
+  Grid,
+  styled,
+  Typography,
+  Paper,
+  ButtonBase,
+  Snackbar,
+} from "@mui/material";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import Dialog from "@mui/material/Dialog";
@@ -42,6 +49,8 @@ const ProductsList = () => {
   };
 
   const condition = localStorage.getItem("condition");
+  const [snack, setsnack] = useState(false);
+  const [snackMsg, setsnackMsg] = useState("");
   const AddToCart = (pid) => {
     if (condition === null) {
       navigate("/login");
@@ -49,13 +58,25 @@ const ProductsList = () => {
       const cid = localStorage.getItem("cartid");
       ApiURlS.addProductToCart(pid, cid)
         .then((res) => {
-          console.log(res.data);
+          setsnack(true);
+          setsnackMsg(res.data);
+          // console.log(res.data);
         })
         .catch((err) => {
-          console.log(err);
+          setsnack(true);
+          setsnackMsg(err.response.data);
+          // console.log(err);
         });
     }
   };
+
+  const action = (
+    <React.Fragment>
+      <IconButton size="small" color="inherit" onClick={() => setsnack(false)}>
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
 
   const buyNow = (pid) => {
     if (condition === null) {
@@ -157,6 +178,15 @@ const ProductsList = () => {
           );
         })}
       </Grid>
+
+      <Snackbar
+        anchorOrigin={{ horizontal: "center", vertical: "top" }}
+        open={snack}
+        autoHideDuration={2000}
+        message={snackMsg}
+        onClose={() => setsnack(false)}
+        action={action}
+      />
 
       <Dialog
         open={productDetailsDialog}
