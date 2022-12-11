@@ -19,8 +19,28 @@ const addProdToCartUrl = "http://localhost:8080/product/addtocart/";
 const removeProdFromCartUrl = "http://localhost:8080/product/removefromcart/";
 const getMyOrdersUrl = "http://localhost:8080/orders/getorderbyuser/";
 const placeOrderUrl = "http://localhost:8080/orders/placeorder";
+const editProductUrl = "http://localhost:8080/product/edit/";
+const editCategoryUrl = "http://localhost:8080/category/edit/";
+const editCouponUrl = "http://localhost:8080/coupon/edit/";
+const editEventUrl = "http://localhost:8080/event/edit/";
 
 class EcommApi {
+  editCategory(id, category) {
+    return axios.patch(editCategoryUrl + id, category);
+  }
+
+  editCoupon(id, coupon) {
+    return axios.patch(editCouponUrl + id, coupon);
+  }
+
+  editEvent(id, event) {
+    return axios.patch(editEventUrl + id, event);
+  }
+
+  editProduct(id, product) {
+    return axios.patch(editProductUrl + id, product);
+  }
+
   getProduct(id) {
     return axios.get(getProductUrl + id);
   }
