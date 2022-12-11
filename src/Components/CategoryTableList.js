@@ -8,11 +8,15 @@ import {
   TableCell,
   TableBody,
   TablePagination,
+  Snackbar,
+  IconButton,
 } from "@mui/material";
 import ApiURlS from "../Service/ApiURl's";
 import "../Css/Content.css";
-// import DeleteIcon from "@mui/icons-material/Delete";
-// import axios from "axios";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import CloseIcon from "@mui/icons-material/Close";
+import axios from "axios";
 
 const CategoryTableList = () => {
   const [categories, setcategories] = useState([]);
@@ -40,15 +44,29 @@ const CategoryTableList = () => {
     setPage(0);
   };
 
-  //   const deleteCategory = (id) => {
-  //     axios
-  //       .delete(`http://localhost:8080/category/delete/${id}`)
-  //       .then((res) => {
-  //         getALlCategories();
-  //         console.log(res.data);
-  //       })
-  //       .catch((err) => console.log(err));
-  //   };
+  const [snack, setsnack] = useState(false);
+  const [snackMsg, setsnackMsg] = useState("");
+  const deleteCategory = (id) => {
+    axios
+      .delete(`http://localhost:8080/category/delete/${id}`)
+      .then((res) => {
+        setsnack(true);
+        setsnackMsg(res.data);
+        getALlCategories();
+      })
+      .catch((err) => {
+        setsnack(true);
+        setsnackMsg(err.response.data);
+      });
+  };
+
+  const action = (
+    <React.Fragment>
+      <IconButton size="small" color="inherit" onClick={() => setsnack(false)}>
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
 
   return (
     <div>
@@ -69,9 +87,9 @@ const CategoryTableList = () => {
                 <TableCell className="tblhd" align="left">
                   Product Description Name
                 </TableCell>
-                {/* <TableCell className="tblhd" align="left">
+                <TableCell className="tblhd" align="left">
                   Actions
-                </TableCell> */}
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -87,12 +105,20 @@ const CategoryTableList = () => {
                     <TableCell align="left">
                       {value.categoryDescription}
                     </TableCell>
-                    {/* <TableCell align="left">
+                    <TableCell align="left">
+                      <EditIcon
+                        style={{
+                          color: "blue",
+                          cursor: "pointer",
+                          marginRight: "20px",
+                        }}
+                        // onClick={() => openModal(value)}
+                      />
                       <DeleteIcon
                         style={{ color: "red", cursor: "pointer" }}
-                        onClick={() => deleteCategory(value.categoryId)}
+                        onClick={() => deleteCategory(value.id)}
                       />
-                    </TableCell> */}
+                    </TableCell>
                   </TableRow>
                 ))}
             </TableBody>
@@ -110,6 +136,14 @@ const CategoryTableList = () => {
           />
         </TableContainer>
       </Paper>
+      <Snackbar
+        anchorOrigin={{ horizontal: "right", vertical: "top" }}
+        open={snack}
+        autoHideDuration={2000}
+        message={snackMsg}
+        onClose={() => setsnack(false)}
+        action={action}
+      />
     </div>
   );
 };

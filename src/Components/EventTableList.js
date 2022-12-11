@@ -8,25 +8,27 @@ import {
   TableCell,
   TableBody,
   TablePagination,
+  Snackbar,
+  IconButton,
 } from "@mui/material";
 import ApiURlS from "../Service/ApiURl's";
 import "../Css/Content.css";
 import dayjs from "dayjs";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import axios from "axios";
+import CloseIcon from "@mui/icons-material/Close";
 
 const EventTableList = () => {
   const [events, setevents] = useState([]);
 
   useEffect(() => {
-    ApiURlS.getAllEvent()
-      .then((res) => {
-        setevents(res.data);
-      })
-      .catch((err) => console.log(err));
+    getEvents();
   }, []);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (newPage) => {
     setPage(newPage);
   };
 
@@ -34,6 +36,38 @@ const EventTableList = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  function getEvents() {
+    ApiURlS.getAllEvent()
+      .then((res) => {
+        setevents(res.data);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  const [snack, setsnack] = useState(false);
+  const [snackMsg, setsnackMsg] = useState("");
+  const deleteEvent = (id) => {
+    axios
+      .delete(`http://localhost:8080/event/delete/${id}`)
+      .then((res) => {
+        setsnack(true);
+        setsnackMsg(res.data);
+        getEvents();
+      })
+      .catch((err) => {
+        setsnack(true);
+        setsnackMsg(err.response.data);
+      });
+  };
+
+  const action = (
+    <React.Fragment>
+      <IconButton size="small" color="inherit" onClick={() => setsnack(false)}>
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
 
   return (
     <div>
@@ -54,6 +88,9 @@ const EventTableList = () => {
                 <TableCell className="tblhd" align="left">
                   Event End Date
                 </TableCell>
+                <TableCell className="tblhd" align="left">
+                  Actions
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -70,6 +107,20 @@ const EventTableList = () => {
                     </TableCell>
                     <TableCell align="left">
                       {dayjs(value.eventEndDate).format("DD-MM-YYYY")}
+                    </TableCell>
+                    <TableCell align="left">
+                      <EditIcon
+                        style={{
+                          color: "blue",
+                          cursor: "pointer",
+                          marginRight: "20px",
+                        }}
+                        // onClick={() => openModal(value)}
+                      />
+                      <DeleteIcon
+                        style={{ color: "red", cursor: "pointer" }}
+                        onClick={() => deleteEvent(value.eventId)}
+                      />
                     </TableCell>
                   </TableRow>
                 ))}
@@ -88,6 +139,14 @@ const EventTableList = () => {
           />
         </TableContainer>
       </Paper>
+      <Snackbar
+        anchorOrigin={{ horizontal: "right", vertical: "top" }}
+        open={snack}
+        autoHideDuration={2000}
+        message={snackMsg}
+        onClose={() => setsnack(false)}
+        action={action}
+      />
     </div>
   );
 };
