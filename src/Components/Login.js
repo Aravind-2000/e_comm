@@ -54,8 +54,12 @@ const Login = () => {
         localStorage.setItem("dp", res.data.profilePicture);
         localStorage.setItem("role", res.data.roleFlag);
         localStorage.setItem("condition", true);
-        navigate("/products");
         setError(false);
+        if (res.data.roleFlag === 1) {
+          navigate("/logindetails");
+        } else {
+          navigate("/products");
+        }
       })
       .catch((err) => {
         console.log(err);
