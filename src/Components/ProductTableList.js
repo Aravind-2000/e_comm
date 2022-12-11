@@ -10,10 +10,18 @@ import {
   Avatar,
   Stack,
   TablePagination,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  IconButton,
+  Snackbar,
 } from "@mui/material";
 import ApiURlS from "../Service/ApiURl's";
 import "../Css/Content.css";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import EditProduct from "./EditProduct";
+import CloseIcon from "@mui/icons-material/Close";
 
 const ProductTableList = () => {
   const [products, setproducts] = useState([]);
@@ -43,14 +51,38 @@ const ProductTableList = () => {
     setPage(0);
   };
 
+  const [product, setproduct] = useState("");
+  const [editModal, seteditModal] = useState(false);
+  const openModal = (prd) => {
+    setproduct(prd);
+    seteditModal(true);
+  };
+  const closeModal = () => {
+    seteditModal(false);
+  };
+
+  const [snack, setsnack] = useState(false);
+  const [snackMsg, setsnackMsg] = useState("");
   const deleteProduct = (id) => {
     ApiURlS.deleteProduct(id)
       .then((res) => {
-        console.log(res.data);
+        setsnack(true);
+        setsnackMsg(res.data);
         getProducts();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setsnack(true);
+        setsnackMsg(err.response.data);
+      });
   };
+
+  const action = (
+    <React.Fragment>
+      <IconButton size="small" color="inherit" onClick={() => setsnack(false)}>
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
 
   return (
     <div>
@@ -70,6 +102,9 @@ const ProductTableList = () => {
                 </TableCell>
                 <TableCell className="tblhd" align="left">
                   Product Category
+                </TableCell>
+                <TableCell className="tblhd" align="left">
+                  Product Price (₹)
                 </TableCell>
                 <TableCell className="tblhd" align="left">
                   Product Image
@@ -92,11 +127,12 @@ const ProductTableList = () => {
                     <TableCell align="left">
                       {value.productCategory?.categoryName}
                     </TableCell>
+                    <TableCell align="justify">{value.productPrice}</TableCell>
                     <TableCell align="left">
                       <Stack direction="row" spacing={2}>
                         <Avatar>
                           <img
-                            alt="Product Image"
+                            alt=""
                             src={value.productImage}
                             style={{
                               position: "relative",
@@ -108,6 +144,14 @@ const ProductTableList = () => {
                       </Stack>
                     </TableCell>
                     <TableCell align="left">
+                      <EditIcon
+                        style={{
+                          color: "blue",
+                          cursor: "pointer",
+                          marginRight: "20px",
+                        }}
+                        onClick={() => openModal(value)}
+                      />
                       <DeleteIcon
                         style={{ color: "red", cursor: "pointer" }}
                         onClick={() => deleteProduct(value.productId)}
@@ -130,6 +174,45 @@ const ProductTableList = () => {
           />
         </TableContainer>
       </Paper>
+      <Dialog
+        open={editModal}
+        fullWidth="true"
+        maxWidth="md"
+        onClose={closeModal}
+        size="lg"
+      >
+        <DialogTitle>
+          <h2> Edit Product </h2>
+          <IconButton
+            aria-label="close"
+            onClick={closeModal}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <EditProduct
+            close={closeModal}
+            product={product}
+            setProduct={setproduct}
+            getAll={getProducts}
+          />
+        </DialogContent>
+      </Dialog>
+      <Snackbar
+        anchorOrigin={{ horizontal: "right", vertical: "top" }}
+        open={snack}
+        autoHideDuration={2000}
+        message={snackMsg}
+        onClose={() => setsnack(false)}
+        action={action}
+      />
     </div>
   );
 };
