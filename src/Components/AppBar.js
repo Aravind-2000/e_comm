@@ -53,15 +53,26 @@ function ResponsiveAppBar() {
           >
             <SecurityUpdateGoodIcon />
           </IconButton>
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="/products"
-            sx={{ flexGrow: 1, textDecoration: "none", color: "black" }}
-          >
-            SMART BUY
-          </Typography>
+          {role === "1" ? (
+            <Typography
+              variant="h5"
+              noWrap
+              component="div"
+              sx={{ flexGrow: 1, textDecoration: "none", color: "black" }}
+            >
+              SMART BUY
+            </Typography>
+          ) : (
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              href="/products"
+              sx={{ flexGrow: 1, textDecoration: "none", color: "black" }}
+            >
+              SMART BUY
+            </Typography>
+          )}
           <Divider />
 
           {condition !== "true" ? (
