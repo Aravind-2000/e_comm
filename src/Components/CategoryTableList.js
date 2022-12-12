@@ -106,14 +106,14 @@ const CategoryTableList = () => {
                       {value.categoryDescription}
                     </TableCell>
                     <TableCell align="left">
-                      <EditIcon
+                      {/* <EditIcon
                         style={{
                           color: "blue",
                           cursor: "pointer",
                           marginRight: "20px",
                         }}
-                        // onClick={() => openModal(value)}
-                      />
+                         onClick={() => openModal(value)}
+                      /> */}
                       <DeleteIcon
                         style={{ color: "red", cursor: "pointer" }}
                         onClick={() => deleteCategory(value.id)}

@@ -109,14 +109,14 @@ const EventTableList = () => {
                       {dayjs(value.eventEndDate).format("DD-MM-YYYY")}
                     </TableCell>
                     <TableCell align="left">
-                      <EditIcon
+                      {/* <EditIcon
                         style={{
                           color: "blue",
                           cursor: "pointer",
                           marginRight: "20px",
                         }}
-                        // onClick={() => openModal(value)}
-                      />
+                         onClick={() => openModal(value)}
+                      /> */}
                       <DeleteIcon
                         style={{ color: "red", cursor: "pointer" }}
                         onClick={() => deleteEvent(value.eventId)}

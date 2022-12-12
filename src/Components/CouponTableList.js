@@ -107,19 +107,18 @@ const CouponTableList = () => {
                       {dayjs(value.expiryDate).format("DD-MM-YYYY")}
                     </TableCell>
                     <TableCell align="left">
-                      <EditIcon
+                      {/* <EditIcon
                         style={{
                           color: "blue",
                           cursor: "pointer",
                           marginRight: "20px",
                         }}
-                        // onClick={() => openModal(value)}
-                      />
+                         onClick={() => openModal(value)}
+                      /> */}
                       <DeleteIcon
                         style={{ color: "red", cursor: "pointer" }}
                         onClick={() => deleteCoupon(value.id)}
                       />
-                      {/* <Button onClick={notify}>Toast</Button> */}
                     </TableCell>
                   </TableRow>
                 ))}
