@@ -11,6 +11,7 @@ import {
   IconButton,
   InputAdornment,
   FormHelperText,
+  Snackbar,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +19,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { FileUploader } from "react-drag-drop-files";
 import ApiURlS from "../../Service/ApiURl's";
 import "../../Css/Content.css";
+import CloseIcon from "@mui/icons-material/Close";
 
 const AdminSignup = () => {
   const navigate = useNavigate();
@@ -74,6 +76,17 @@ const AdminSignup = () => {
     });
   };
 
+  const [snack, setsnack] = useState(false);
+  const [snackMsg, setsnackMsg] = useState("");
+
+  const action = (
+    <React.Fragment>
+      <IconButton size="small" color="inherit" onClick={() => setsnack(false)}>
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (checkingPasswords(password, repassword)) {
@@ -92,7 +105,9 @@ const AdminSignup = () => {
             navigate("/login");
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
+            setsnack(true);
+            setsnackMsg(err.response.data);
           });
       } else {
         const signupdetails_1 = {
@@ -107,7 +122,9 @@ const AdminSignup = () => {
             navigate("/login");
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
+            setsnack(true);
+            setsnackMsg(err.response.data);
           });
       }
     }
@@ -261,6 +278,14 @@ const AdminSignup = () => {
           </Box>
         </form>
       </Paper>
+      <Snackbar
+        anchorOrigin={{ horizontal: "right", vertical: "top" }}
+        open={snack}
+        autoHideDuration={2000}
+        message={snackMsg}
+        onClose={() => setsnack(false)}
+        action={action}
+      />
     </div>
   );
 };

@@ -11,6 +11,7 @@ import {
   IconButton,
   InputAdornment,
   FormHelperText,
+  Snackbar,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +19,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { FileUploader } from "react-drag-drop-files";
 import ApiURlS from "../Service/ApiURl's";
 import "../Css/Content.css";
+import CloseIcon from "@mui/icons-material/Close";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -90,6 +92,17 @@ const Signup = () => {
     }
   };
 
+  const [snack, setsnack] = useState(false);
+  const [snackMsg, setsnackMsg] = useState("");
+
+  const action = (
+    <React.Fragment>
+      <IconButton size="small" color="inherit" onClick={() => setsnack(false)}>
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (checkingPasswords(password, repassword)) {
@@ -104,11 +117,13 @@ const Signup = () => {
         };
         ApiURlS.doSignupAsCustomer(signupdetails)
           .then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             navigate("/login");
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
+            setsnack(true);
+            setsnackMsg(err.response.data);
           });
       } else {
         const signupdetails_1 = {
@@ -119,11 +134,13 @@ const Signup = () => {
         };
         ApiURlS.doSignupAsCustomer(signupdetails_1)
           .then((res) => {
-            console.log(res.data);
+            //console.log(res.data);
             navigate("/login");
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
+            setsnack(true);
+            setsnackMsg(err.response.data);
           });
       }
     }
@@ -221,10 +238,12 @@ const Signup = () => {
                 className="formtext"
                 label="Phone Number"
                 value={phoneNumber}
+                type="number"
                 style={{ marginTop: 20 }}
                 placeholder="Enter phone number"
                 onChange={(e) => setphoneNumber(e.target.value)}
                 fullWidth
+                max="10"
                 required
               />
               <br />
@@ -265,6 +284,14 @@ const Signup = () => {
           </Box>
         </form>
       </Paper>
+      <Snackbar
+        anchorOrigin={{ horizontal: "right", vertical: "top" }}
+        open={snack}
+        autoHideDuration={2000}
+        message={snackMsg}
+        onClose={() => setsnack(false)}
+        action={action}
+      />
     </div>
   );
 };
